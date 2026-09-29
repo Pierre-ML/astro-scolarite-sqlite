@@ -3,4 +3,5 @@ dist/
 .astro/
 .env
 data/
-data/*
+data/*bun.lock
+bun.lockb

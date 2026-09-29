@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { SignIn } from "auth-astro/components";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro.request);
+if (session) return Astro.redirect("/");
+---
+<Layout title="Connexion">
+  <h1>Connexion</h1>
+  <p>Authentifiez-vous avec votre compte Google pour accéder à la scolarité.</p>
+  <div class="card login">
+    <SignIn provider="google">Se connecter avec Google</SignIn>
+  </div>
+</Layout>
+
+<style>
+  .login {
+    max-width: 420px;
+    margin-top: 18px;
+  }
+  .login :global(button) {
+    width: 100%;
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 8px;
+    background: #172033;
+    color: white;
+    font-size: 15px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .login :global(button:hover) {
+    background: #2a3a55;
+  }
+</style>
