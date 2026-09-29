@@ -3,7 +3,12 @@ import node from "@astrojs/node";
 import auth from "auth-astro";
 
 export default defineConfig({
+  site: "https://scolariter.pierre-mouilleseaux-lhuillier.fr",
   output: "server",
-  adapter: node({ mode: "standalone" }),
-  integrations: [auth()],
+
+  adapter: node({
+      mode: "standalone"
+  }),
+
+  integrations: [auth()]
 });
