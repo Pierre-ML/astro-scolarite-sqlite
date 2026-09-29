@@ -18,6 +18,19 @@ export default defineConfig({
   ],
   secret: import.meta.env.AUTH_SECRET,
   trustHost: true,
+  // Pin cookie names/Secure flag instead of letting @auth/core infer them
+  // per-request from `new URL(request.url).protocol`. That inference
+  // depends on req.socket.encrypted, which our server.mjs only sets when
+  // it trusts the immediate peer (see server.mjs) — if Apache's proxy
+  // connection ever comes from an untrusted/unexpected address, or a
+  // request slips through some other path, cookies could silently fall
+  // back to non-Secure, non-`__Secure-`-prefixed names. Since this app is
+  // only ever served over HTTPS in production, hardcode it here so
+  // session cookies are always `__Secure-`/`__Host-` prefixed and marked
+  // Secure, with no per-request guessing involved. Left unset in dev
+  // (import.meta.env.PROD is false) so `astro dev` over plain http still
+  // works locally.
+  useSecureCookies: import.meta.env.PROD,
   pages: { signIn: "/login" },
   callbacks: {
     redirect({ baseUrl }) {
