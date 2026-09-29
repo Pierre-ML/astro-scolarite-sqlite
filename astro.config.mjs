@@ -6,6 +6,10 @@ export default defineConfig({
   site: "https://scolariter.pierre-mouilleseaux-lhuillier.fr",
   output: "server",
 
+  security: {
+    checkOrigin: false,
+  },
+
   adapter: node({
       mode: "standalone"
   }),
