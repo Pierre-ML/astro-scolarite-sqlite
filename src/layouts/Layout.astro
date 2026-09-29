@@ -1,6 +1,28 @@
 ﻿---
 import "../styles/global.css";
+import { SignOut } from "auth-astro/components";
+import { getSession } from "auth-astro/server";
 const { title="Scolarité" } = Astro.props;
+const session = await getSession(Astro.request);
 ---
 <html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>{title} — Scolarité</title></head>
-<body><nav><div class="container"><strong>Scolarité</strong><a href="/">Accueil</a><a href="/students">Étudiants</a><a href="/formations">Formations</a><a href="/courses">Cours</a><a href="/registrations">Inscriptions</a><a href="/teachers">Enseignants</a></div></nav><main class="container"><slot /></main></body></html>
+<body><nav><div class="container"><strong>Scolarité</strong><a href="/">Accueil</a><a href="/students">Étudiants</a><a href="/formations">Formations</a><a href="/courses">Cours</a><a href="/registrations">Inscriptions</a><a href="/teachers">Enseignants</a>{session && (
+  <SignOut class="logout-btn">Déconnexion</SignOut>
+)}</div></nav><main class="container"><slot /></main></body></html>
+
+<style>
+  .logout-btn {
+    margin-left: auto;
+    padding: 8px 14px;
+    border: 1px solid #ffffff33;
+    border-radius: 8px;
+    background: transparent;
+    color: white;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .logout-btn:hover {
+    background: #ffffff14;
+  }
+</style>
